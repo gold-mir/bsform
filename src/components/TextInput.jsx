@@ -54,7 +54,7 @@ function TextInput() {
 
     const onSelectNo = async () => {
         setState({...state, email: {selected: "No"}});
-        await new Promise(resolve => setTimeout(resolve, 3000 + Math.floor(Math.random()*7000)));
+        await new Promise(resolve => setTimeout(resolve, 500 + Math.floor(Math.random()*4000)));
         setState({...state, email: {selected: "Yes"}});
     }
 
@@ -72,7 +72,7 @@ function TextInput() {
 
     return (
         <form onSubmit={onSubmit}>
-            <h2>Stupid Industries Signup Form</h2>
+            <h2>Sign Up for Nonsense Industries</h2>
             <Container>
                 <FormSubset>
                     <label htmlFor="firstName">First Name:</label>
@@ -90,6 +90,12 @@ function TextInput() {
                 </FormSubset>
 
                 <FormSubset>
+                    <label htmlFor="genderBox">Gender:</label>
+                    <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
+                    {state.gender?.error? <Error>{state.gender.error}</Error> : null}
+                </FormSubset>
+
+                <FormSubset>
                     <label htmlFor="username">Username:</label>
                     <input id="username" type="text" value={state.username.value}></input>
                     {state.username?.error ? <Error>{state.username.error}</Error> : null}
@@ -99,12 +105,6 @@ function TextInput() {
                     <label htmlFor="zipCode">Postal code:</label>
                     <input id="zipCode" type="text" value={state.zip.value} onChange={(e) => setValue("zip", e.target.value.replace(/\D/g,'').substring(0, 5))}></input>
                     {state.zip?.error? <Error>{state.zip.error}</Error> : null}
-                </FormSubset>
-
-                <FormSubset>
-                    <label htmlFor="genderBox">Gender:</label>
-                    <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
-                    {state.gender?.error? <Error>{state.gender.error}</Error> : null}
                 </FormSubset>
 
                 <FormSubset>
