@@ -9,6 +9,7 @@ const Container = styled.div`
     flex-direction: column;
     width: 400px;
     row-gap: 10px;
+    padding-bottom: 40px;
 `
 
 const FormSubset = styled.div`
@@ -32,19 +33,19 @@ function TextInput() {
             value: ''
         },
         username: {
+            value: '',
             error: ''
         },
         email: {
             selected: ''
+        },
+        frog: {
+
         }
     });
 
     const setValue = (propName, value) => {
         setState({...state, [propName]: {...state[propName], value: value}})
-    }
-
-    const setError = (propName, error) => {
-        setState({...state, [propName]: {...state[propName], error: error}})
     }
 
     const onSelectYes = () => {
@@ -63,13 +64,15 @@ function TextInput() {
         await new Promise(resolve => setTimeout(resolve, 500));
         setState({...state,
                 gender: {...state["gender"], error: testString(state.gender.value)},
-                username: {...state["username"], error: `Your username is taken. Maybe try ${getRandomName()}?`}
+                username: {...state["username"], error: `${state.username.value.length > 0? `Your username is taken. Maybe try ${getRandomName()}?` : "Username cannot be blank."}`},
+                frog: {...state["frog"], error: "You have selected the incorrect frog. Please select the BEST frog to prove you are human."},
+                zip: {...state["zip"], error: state.zip.value? null : "Postal Code cannot be blank." }
             });
     }
 
     return (
         <form onSubmit={onSubmit}>
-            <h2>Stupid Signup Form</h2>
+            <h2>Stupid Industries Signup Form</h2>
             <Container>
                 <FormSubset>
                     <label htmlFor="firstName">First Name:</label>
@@ -88,13 +91,14 @@ function TextInput() {
 
                 <FormSubset>
                     <label htmlFor="username">Username:</label>
-                    <input id="username" type="text"></input>
+                    <input id="username" type="text" value={state.username.value}></input>
                     {state.username?.error ? <Error>{state.username.error}</Error> : null}
                 </FormSubset>
                 
                 <FormSubset>
                     <label htmlFor="zipCode">Postal code:</label>
                     <input id="zipCode" type="text" value={state.zip.value} onChange={(e) => setValue("zip", e.target.value.replace(/\D/g,'').substring(0, 5))}></input>
+                    {state.zip?.error? <Error>{state.zip.error}</Error> : null}
                 </FormSubset>
 
                 <FormSubset>
@@ -102,7 +106,6 @@ function TextInput() {
                     <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
                     {state.gender?.error? <Error>{state.gender.error}</Error> : null}
                 </FormSubset>
-                <FrogSelect></FrogSelect>
 
                 <FormSubset>
                     <legend>I consent to receiving your dumb promotional bullshit until I finally remember to unsubscribe</legend>
@@ -112,6 +115,11 @@ function TextInput() {
                     <div style={{fontSize:"8px"}}>
                         <input type="radio" value="emailNo" checked={state.email.selected === "No"} onClick={onSelectNo}/> No (and I hate you)
                     </div>
+                </FormSubset>
+
+                <FormSubset>
+                    <FrogSelect/>
+                    {state.frog?.error? <Error>{state.frog.error}</Error> : null}
                 </FormSubset>
 
                 <button type="submit">Submit</button>
