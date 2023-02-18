@@ -25,6 +25,9 @@ function TextInput() {
         gender: {
             value: '',
             error: ''
+        },
+        zip: {
+            value: ''
         }
     });
 
@@ -57,9 +60,14 @@ function TextInput() {
 
                 <FormSubset>
                     <label>Date of Birth:</label>
-                    <input type="date" />
+                    <input type="date" defaultValue="2063-04-05"/>
                 </FormSubset>
                 
+                <FormSubset>
+                    <label htmlFor="zipCode">Postal code:</label>
+                    <input id="zipCode" type="text" value={state.zip.value} onChange={(e) => setValue("zip", e.target.value.replace(/\D/g,'').substring(0, 5))}></input>
+                </FormSubset>
+
                 <FormSubset>
                     <label htmlFor="genderBox">Gender:</label>
                     <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
