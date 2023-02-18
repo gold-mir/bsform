@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { testString } from './RegexRequirements'
+import FrogSelect from './FrogSelect'
 
 const Container = styled.div`
     display: flex;
@@ -65,6 +66,7 @@ function TextInput() {
                     <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
                     {state.gender?.error? <Error>{state.gender.error}</Error> : null}
                 </FormSubset>
+                <FrogSelect></FrogSelect>
 
                 <button type="submit">Submit</button>
             </Container>
