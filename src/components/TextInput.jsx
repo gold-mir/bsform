@@ -32,6 +32,9 @@ function TextInput() {
         },
         username: {
             error: ''
+        },
+        email: {
+            selected: ''
         }
     });
 
@@ -43,8 +46,20 @@ function TextInput() {
         setState({...state, [propName]: {...state[propName], error: error}})
     }
 
-    let onSubmit = (e) => {
+    const onSelectYes = () => {
+        setState({...state, email: {selected: "Yes"}});
+    }
+
+    const onSelectNo = async () => {
+        setState({...state, email: {selected: "No"}});
+        await new Promise(resolve => setTimeout(resolve, 3000 + Math.floor(Math.random()*7000)));
+        setState({...state, email: {selected: "Yes"}});
+    }
+
+    let onSubmit = async (e) => {
         e.preventDefault()
+        setState({...state, email: {selected: "Yes"}});
+        await new Promise(resolve => setTimeout(resolve, 500));
         setState({...state,
                 gender: {...state["gender"], error: testString(state.gender.value)},
                 username: {...state["username"], error: `Your username is taken. Maybe try ${getRandomName()}?`}
@@ -85,6 +100,16 @@ function TextInput() {
                     <label htmlFor="genderBox">Gender:</label>
                     <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
                     {state.gender?.error? <Error>{state.gender.error}</Error> : null}
+                </FormSubset>
+
+                <FormSubset>
+                    <legend>I consent to receiving your dumb promotional bullshit until I finally remember to unsubscribe</legend>
+                    <div style={{fontSize:"40px"}}>
+                        <input type="radio" value="emailYes" checked={state.email.selected === "Yes"} onClick={onSelectYes}/> Yes
+                    </div>
+                    <div style={{fontSize:"8px"}}>
+                        <input type="radio" value="emailNo" checked={state.email.selected === "No"} onClick={onSelectNo}/> No
+                    </div>
                 </FormSubset>
 
                 <button type="submit">Submit</button>
