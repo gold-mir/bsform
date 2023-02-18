@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { testString } from './RegexRequirements'
+import FrogSelect from './FrogSelect'
 import { getRandomName } from './Username';
 
 const Container = styled.div`
@@ -101,6 +102,7 @@ function TextInput() {
                     <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
                     {state.gender?.error? <Error>{state.gender.error}</Error> : null}
                 </FormSubset>
+                <FrogSelect></FrogSelect>
 
                 <FormSubset>
                     <legend>I consent to receiving your dumb promotional bullshit until I finally remember to unsubscribe</legend>
