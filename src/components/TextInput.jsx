@@ -108,7 +108,7 @@ function TextInput() {
                         <input type="radio" value="emailYes" checked={state.email.selected === "Yes"} onClick={onSelectYes}/> Yes
                     </div>
                     <div style={{fontSize:"8px"}}>
-                        <input type="radio" value="emailNo" checked={state.email.selected === "No"} onClick={onSelectNo}/> No
+                        <input type="radio" value="emailNo" checked={state.email.selected === "No"} onClick={onSelectNo}/> No (and I hate you)
                     </div>
                 </FormSubset>
 
