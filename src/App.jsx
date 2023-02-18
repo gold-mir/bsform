@@ -4,9 +4,9 @@ import TextInput from './components/TextInput';
 
 let AppContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  width: 400px;
+  justify-content: center;
 `
 
 function App() {
