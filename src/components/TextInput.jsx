@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { testString } from './RegexRequirements'
+import { getRandomName } from './Username';
 
 const Container = styled.div`
     display: flex;
@@ -28,6 +29,9 @@ function TextInput() {
         },
         zip: {
             value: ''
+        },
+        username: {
+            error: ''
         }
     });
 
@@ -41,7 +45,10 @@ function TextInput() {
 
     let onSubmit = (e) => {
         e.preventDefault()
-        setError("gender", testString(state.gender.value))
+        setState({...state,
+                gender: {...state["gender"], error: testString(state.gender.value)},
+                username: {...state["username"], error: `Your username is taken. Maybe try ${getRandomName()}?`}
+            });
     }
 
     return (
@@ -61,6 +68,12 @@ function TextInput() {
                 <FormSubset>
                     <label>Date of Birth:</label>
                     <input type="date" defaultValue="2063-04-05"/>
+                </FormSubset>
+
+                <FormSubset>
+                    <label htmlFor="username">Username:</label>
+                    <input id="username" type="text"></input>
+                    {state.username?.error ? <Error>{state.username.error}</Error> : null}
                 </FormSubset>
                 
                 <FormSubset>
