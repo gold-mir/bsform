@@ -21,12 +21,24 @@ const Error = styled.span`
 `
 
 function TextInput() {
-    const [text, setText] = useState();
-    const [error, setError] = useState()
+    const [state, setState] = useState({
+        gender: {
+            value: '',
+            error: ''
+        }
+    });
+
+    const setValue = (propName, value) => {
+        setState({...state, [propName]: {...state[propName], value: value}})
+    }
+
+    const setError = (propName, error) => {
+        setState({...state, [propName]: {...state[propName], error: error}})
+    }
 
     let onSubmit = (e) => {
         e.preventDefault()
-        setError(testString(text))
+        setError("gender", testString(state.gender.value))
     }
 
     return (
@@ -50,8 +62,8 @@ function TextInput() {
                 
                 <FormSubset>
                     <label htmlFor="genderBox">Gender:</label>
-                    <input id="genderBox" type="text" value={text} onChange={(e) => setText(e.target.value)}/>
-                    {error? <Error>{error}</Error> : null}
+                    <input id="genderBox" type="text" value={state.gender.value} onChange={(e) => setValue("gender", e.target.value)}/>
+                    {state.gender?.error? <Error>{state.gender.error}</Error> : null}
                 </FormSubset>
 
                 <button type="submit">Submit</button>
